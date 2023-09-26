@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CircularShift {
-    public static List<String> CircularShift(Alphabetizer a, String input) {
+    public CircularShift(){}
+    public ArrayList<String> shift(String input) {
         String[] words = input.split(" ");
-        List<String> permutations = new ArrayList<>();
+        ArrayList<String> permutations = new ArrayList<>();
         
         // Iterate through each word in the input string
         for (int i = 0; i < words.length; i++) {

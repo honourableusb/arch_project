@@ -13,18 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Alphabetizer {
-    public static List<String> Alphabetizer(List<String> inputList) {
+    public Alphabetizer(){}
+    public ArrayList<String> Alphabetize(ArrayList<String> inputList) {
        return mergeSort(inputList);
     }
 
-    public static List<String> mergeSort(List<String> inputList) {
+    public static ArrayList<String> mergeSort(ArrayList<String> inputList) {
         if (inputList.size() <= 1) {
             return inputList;
         }
 
         int middle = inputList.size() / 2;
-        List<String> left = inputList.subList(0, middle);
-        List<String> right = inputList.subList(middle, inputList.size());
+        ArrayList<String> left = new ArrayList<>(inputList.subList(0, middle));
+        ArrayList<String> right = new ArrayList<>(inputList.subList(middle, inputList.size()));
 
         left = mergeSort(left);
         right = mergeSort(right);
@@ -32,8 +33,8 @@ public class Alphabetizer {
         return merge(left, right);
     }
 
-    private static List<String> merge(List<String> left, List<String> right) {
-        List<String> result = new ArrayList<>();
+    private static ArrayList<String> merge(ArrayList<String> left, ArrayList<String> right) {
+        ArrayList<String> result = new ArrayList<>();
         int leftIndex = 0;
         int rightIndex = 0;
 
@@ -41,7 +42,7 @@ public class Alphabetizer {
             String leftElement = left.get(leftIndex);
             String rightElement = right.get(rightIndex);
 
-            if (leftElement.compareTo(rightElement) < 0) {
+            if (leftElement.compareToIgnoreCase(rightElement) < 0) {
                 result.add(leftElement);
                 leftIndex++;
             } else {
