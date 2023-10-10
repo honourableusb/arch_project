@@ -18,7 +18,7 @@ public class Alphabetizer {
        return mergeSort(inputList);
     }
 
-    public static ArrayList<String> mergeSort(ArrayList<String> inputList) {
+    private static ArrayList<String> mergeSort(ArrayList<String> inputList) {
         if (inputList.size() <= 1) {
             return inputList;
         }

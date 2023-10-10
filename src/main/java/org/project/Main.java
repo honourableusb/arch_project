@@ -1,220 +1,118 @@
-//UTD SE 6362 F23 Deliverable -- KWIC Algorithm
-//Team Members:
-// - Shariq Azeem
-// - Ayush Bhardwaj
-// - Jeremiah De Luna
-// - Matthew Haskell
-// - Eddie Villareal
-
-//Main.java -- this is our orchestrator
 package org.project;
-
-import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
+    private static JFrame frame;
+    private static JTextPane originalInputPane;
+    private static JTextPane circularShiftedTitlesPane;
+    private static JTextPane individualTitlesAlphabetizedPane;
+    private static JTextPane totalAlphabetizedListPane;
+    private static Map<String, Color> inputColorMap = new HashMap<>();
+    private static ArrayList<String> totalAlphabetizedList = new ArrayList<>();
+    private static ArrayList<ArrayList<String>> alphabetizedLists = new ArrayList<>();
+    private static List<Color> assignedColor = new ArrayList<>();
+    private static CircularShift circularShift = new CircularShift();
+    private static Alphabetizer alphabetize = new Alphabetizer();
+    private static List<Color> availableColors = new ArrayList<>();
 
-    private static Color color1 = Color.BLUE;
-    private static Color color2 = Color.RED;
-    private static Color currentColor = color1;
-    private static ArrayList<String> totalList = new ArrayList<>();
-   
-    public static void main(String[] input){
-        // Instantiate the necessaru classes 
-        CircularShift circularShift = new CircularShift();
-        Alphabetizer alphabetizer = new Alphabetizer();
-        
-        // Create a JFrame (window)
-        JFrame frame = new JFrame("The KWIC System");
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            createAndShowGUI();
+        });
+    }
+
+    private static void createAndShowGUI() {
+        frame = new JFrame("KWIC Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 300); // Set the window size
 
-        // Create a JPanel to hold components using a GridBagLayout
-        JPanel panel = new JPanel(new GridBagLayout());
+        // Create a panel to hold all the output boxes with GridLayout
+        JPanel outputPanel = new JPanel(new GridLayout(2, 2));
 
-        // Create a GridBagConstraints object to control component placement
-        GridBagConstraints gbc = new GridBagConstraints();
+        originalInputPane = createTextPane("Original Input");
+        circularShiftedTitlesPane = createTextPane("Circular Shifted Titles");
+        individualTitlesAlphabetizedPane = createTextPane("Individual Titles Alphabetized");
+        totalAlphabetizedListPane = createTextPane("Total Alphabetized List");
 
-        // Create a JLabel for each text box
-        JLabel label = new JLabel("Enter text:");
-        JLabel inputLabel = new JLabel("Titles entered");
-        JLabel shiftLabel = new JLabel("Circular Shifted");
-        JLabel alphaLabel = new JLabel("Alphabetical per Title");
-        JLabel alphaTotalLabel = new JLabel("Alphabetical");
+        // Add output panes to the output panel
+        outputPanel.add(originalInputPane);
+        outputPanel.add(circularShiftedTitlesPane);
+        outputPanel.add(individualTitlesAlphabetizedPane);
+        outputPanel.add(totalAlphabetizedListPane);
 
-        // Create a JTextField (input box) with a dynamic width and fixed height
-        JTextField inputField = new JTextField(10); // 10 columns wide
-        inputField.setPreferredSize(new Dimension(0, 30)); // Set the height, width is calculated dynamically
+        // Create an input field
+        JTextField inputField = createInputField();
 
-        // Create a JButton
-        JButton submitButton = new JButton("Submit");
+        // Create a panel to hold the input field and the output panel
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(inputField, BorderLayout.NORTH);
+        mainPanel.add(outputPanel, BorderLayout.CENTER);
 
-        // Create a JTextPane to display all inputted titles
-        JTextPane inputPanel = new JTextPane();
-        inputPanel.setEditable(false); // Make it read-only
-        inputPanel.setPreferredSize(new Dimension(0, 150)); // Set the height, width is calculated dynamically
+        frame.add(mainPanel);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
-        // Create a JScrollPane for the text pane
-        JScrollPane scrollPanel = new JScrollPane(inputPanel);
+    private static JTextPane createTextPane(String title) {
+        JTextPane textPane = new JTextPane();
+        textPane.setEditable(false);
+        textPane.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK), title));
+        return textPane;
+    }
 
-        // Add a border to the inputPanel 
-        inputPanel.setBorder(new LineBorder(Color.BLACK));
-
-        // Create a JTextPane to display all Circular Shifted titles
-        JTextPane circularShiftPanel = new JTextPane();
-        circularShiftPanel.setEditable(false); // Make it read-only
-        circularShiftPanel.setPreferredSize(new Dimension(0, 150)); // Set the height, width is calculated dynamically
-        JScrollPane scrollPanelCS = new JScrollPane(circularShiftPanel);
-        circularShiftPanel.setBorder(new LineBorder(Color.BLACK));
-
-        // Create a JTextPane to display alphabetized Shifted titles
-        JTextPane alphabetizerPanel = new JTextPane();
-        alphabetizerPanel.setEditable(false); // Make it read-only
-        alphabetizerPanel.setPreferredSize(new Dimension(0, 150)); // Set the height, width is calculated dynamically
-        JScrollPane scrollPanelAlpha = new JScrollPane(alphabetizerPanel);
-        alphabetizerPanel.setBorder(new LineBorder(Color.BLACK));
-
-        // Create a JTextPane to display all alphabetized titles
-        JTextPane alphabetizerTotalPanel = new JTextPane();
-        alphabetizerTotalPanel.setEditable(false); // Make it read-only
-        alphabetizerTotalPanel.setPreferredSize(new Dimension(0, 150)); // Set the height, width is calculated dynamically
-        JScrollPane scrollPanelAlphaTotal = new JScrollPane(alphabetizerTotalPanel);
-        alphabetizerTotalPanel.setBorder(new LineBorder(Color.BLACK));
-
-        // Add components to the panel using GridBagConstraints
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(0, 20, 0, 20); // 10% margin on both sides
-        gbc.anchor = GridBagConstraints.WEST;
-        panel.add(label, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 0.8; // Allow the textField to expand horizontally (80% of available width)
-        panel.add(inputField, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0.1; // Make some space between textField and submitButton (10% of available width)
-        panel.add(submitButton, gbc);
-
-        // Add components to the panel using GridBagConstraints
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(0, 20, 0, 20); // 10% margin on both sides
-        gbc.anchor = GridBagConstraints.WEST;
-        panel.add(inputLabel, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0; // Allow the textPane to expand horizontally
-        panel.add(scrollPanel, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(0, 20, 0, 20); // 10% margin on both sides
-        gbc.anchor = GridBagConstraints.WEST;
-        panel.add(shiftLabel, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 9;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0; // Allow the textPane to expand horizontally
-        panel.add(scrollPanelCS, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 13;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(0, 20, 0, 20); // 10% margin on both sides
-        gbc.anchor = GridBagConstraints.WEST;
-        panel.add(alphaLabel, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 16;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0; // Allow the textPane to expand horizontally
-        panel.add(scrollPanelAlpha, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 19;
-        gbc.gridwidth = 3;
-        gbc.insets = new Insets(0, 20, 0, 20); // 10% margin on both sides
-        gbc.anchor = GridBagConstraints.WEST;
-        panel.add(alphaTotalLabel, gbc);
-
-         gbc.gridx = 0;
-        gbc.gridy = 22;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0; // Allow the textPane to expand horizontally
-        panel.add(scrollPanelAlphaTotal, gbc);
-
-        // Allows 'enter' to activate button along with pressing it
-        frame.getRootPane().setDefaultButton(submitButton);
-
-        // Define an ActionListener for the submit button
-        submitButton.addActionListener(new ActionListener() {
+    private static JTextField createInputField() {
+        JTextField inputField = new JTextField();
+        inputField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Clear our the total Alphabetical panel
-                alphabetizerTotalPanel.setText("");
-                // Get the text from the text field
-                String inputText = inputField.getText();
-                // Handle Ciruclar Shift
-                ArrayList<String> csResults = new ArrayList<>();
-                csResults = circularShift.shift(inputText);
-                // Alphaetize single title
-                ArrayList<String> alphaResults = new ArrayList<>();
-                alphaResults = alphabetizer.Alphabetize(csResults);
-                // Alphabetize all titles
-                totalList.addAll(alphaResults);
-                totalList = alphabetizer.Alphabetize(totalList);
+                String userInput = inputField.getText();
+                Color inputColor = getNextAvailableColor();
+                assignedColor.add(inputColor);
+                totalAlphabetizedListPane.setText("");
 
-                // Append the submitted text to the textPane with alternating colors
-                appendToInputPanel(inputPanel, inputText, currentColor);
-                appendToCSPanel(circularShiftPanel, csResults, currentColor);
-                appendToAlphaPanel(alphabetizerPanel, alphaResults, currentColor);
-                appendToAlphaTotalPanel(alphabetizerTotalPanel, totalList, color1, color2);
+                // Store the input color
+                inputColorMap.put(userInput, inputColor);
 
-                // Toggle between the two colors
-                currentColor = (currentColor == color1) ? color2 : color1;
+                // Display original input with the specified color
+                appendToTextPane(originalInputPane, userInput, inputColor);
 
-                // Clear the text field for the next input
+                // Perform Circular Shift
+                ArrayList<String> circularShiftedTitles = circularShift.shift(userInput);
+
+                // Display Circular Shifted Titles with the specified color
+                appendToTextPane(circularShiftedTitlesPane, circularShiftedTitles, inputColor);
+
+                // Perform Alphabetization
+                ArrayList<String> individualTitlesAlphabetized = alphabetize.Alphabetize(circularShiftedTitles);
+
+                // Display Individual Titles Alphabetized with the specified color
+                appendToTextPane(individualTitlesAlphabetizedPane, individualTitlesAlphabetized, inputColor);
+
+                alphabetizedLists.add(individualTitlesAlphabetized);
+
+                // Update and display Total Alphabetized List
+                totalAlphabetizedList.addAll(individualTitlesAlphabetized);
+                totalAlphabetizedList = alphabetize.Alphabetize(totalAlphabetizedList);
+                appendToAlphabeticalPane(totalAlphabetizedListPane, totalAlphabetizedList);
+
+                // Clear the input field for the next input
                 inputField.setText("");
             }
         });
 
-        // Add the panel to the frame
-        frame.add(panel);
-
-        // Make the frame visible
-        frame.setVisible(true);
+        return inputField;
     }
 
-    private static void appendToInputPanel(JTextPane textPane, String text, Color color) {
+    private static void appendToTextPane(JTextPane textPane, String text, Color color) {
         StyledDocument doc = textPane.getStyledDocument();
         SimpleAttributeSet style = new SimpleAttributeSet();
         StyleConstants.setForeground(style, color);
@@ -226,50 +124,43 @@ public class Main {
         }
     }
 
-    private static void appendToCSPanel(JTextPane textPane, ArrayList<String> text, Color color) {
+    private static void appendToTextPane(JTextPane textPane, List<String> lines, Color color) {
+        for (String line : lines) {
+            appendToTextPane(textPane, line, color);
+        }
+    }
+
+    private static void appendToAlphabeticalPane(JTextPane textPane, String text, Color color){
         StyledDocument doc = textPane.getStyledDocument();
         SimpleAttributeSet style = new SimpleAttributeSet();
         StyleConstants.setForeground(style, color);
 
         try {
-            for (String result : text) {
-                doc.insertString(doc.getLength(), result + "\n", style);
-            }
-            doc.insertString(doc.getLength(), "\n", style);
+            doc.insertString(doc.getLength(), text + "\n", style);
         } catch (BadLocationException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private static void appendToAlphabeticalPane(JTextPane textPane, List<String> lines) {
+        Color color = Color.BLACK;
+        for (String line : lines) {
+            for(ArrayList<String> title : alphabetizedLists){
+                if(title.contains(line)){
+                    color = assignedColor.get(alphabetizedLists.indexOf(title));
+                }
+            }
+            appendToAlphabeticalPane(textPane, line, color);
         }
     }
 
-    private static void appendToAlphaPanel(JTextPane textPane, ArrayList<String> text, Color color) {
-        StyledDocument doc = textPane.getStyledDocument();
-        SimpleAttributeSet style = new SimpleAttributeSet();
-        StyleConstants.setForeground(style, color);
-
-        try {
-            for (String result : text) {
-                doc.insertString(doc.getLength(), result + "\n", style);
-            }
-            doc.insertString(doc.getLength(), "\n", style);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
+    private static Color getNextAvailableColor() {
+        if (availableColors.isEmpty()) {
+            // If all colors have been used, reset the list
+            availableColors.addAll(Arrays.asList(Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.MAGENTA, Color.CYAN));
         }
-    }
-
-    private static void appendToAlphaTotalPanel(JTextPane textPane, ArrayList<String> text, Color color1, Color color2) {
-        StyledDocument doc = textPane.getStyledDocument();
-        SimpleAttributeSet style = new SimpleAttributeSet();
-        Color color = color1;
-
-        try {
-            for (String result : text) {
-                color = (color == color1) ? color2 : color1;
-                StyleConstants.setForeground(style, color);
-                doc.insertString(doc.getLength(), result + "\n", style);
-            }
-            doc.insertString(doc.getLength(), "\n", style);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
+        return availableColors.remove(0);
     }
 }
+      
