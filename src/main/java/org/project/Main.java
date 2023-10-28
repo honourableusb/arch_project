@@ -7,9 +7,10 @@
 // - Eddie Villareal
 
 //Main.java -- this is our orchestrator
+//TODO needs a rehaul for phase 2
 package org.project;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,12 @@ public class Main {
         // Instantiate the necessaru classes 
         CircularShift circularShift = new CircularShift();
         Alphabetizer alphabetizer = new Alphabetizer();
-        
+
+        //TODO remve hardcode when upload functionality works
+        String hardcodedFile = "src\\main\\resources\\input.txt";
+        Input urlInput = new Input(hardcodedFile);
+        HashMap<String, descriptionObject> inputItems = urlInput.processInputFile();
+
         // Create a JFrame (window)
         JFrame frame = new JFrame("The KWIC System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -188,10 +194,9 @@ public class Main {
                 csResults = circularShift.shift(inputText);
                 // Alphaetize single title
                 ArrayList<String> alphaResults = new ArrayList<>();
-                alphaResults = alphabetizer.Alphabetize(csResults);
+                alphaResults = alphabetizer.Alphabetize(csResults, null);
                 // Alphabetize all titles
-                totalList.addAll(alphaResults);
-                totalList = alphabetizer.Alphabetize(totalList);
+                totalList = alphabetizer.Alphabetize(alphaResults, totalList);
 
                 // Append the submitted text to the textPane with alternating colors
                 appendToInputPanel(inputPanel, inputText, currentColor);
