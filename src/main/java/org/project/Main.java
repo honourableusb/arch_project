@@ -68,7 +68,7 @@ public class Main {
         textPane.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK), title));
         return textPane;
     }
-
+ 
     private static JTextField createInputField() {
         JTextField inputField = new JTextField();
         inputField.addActionListener(new ActionListener() {

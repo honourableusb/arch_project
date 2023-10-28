@@ -15,6 +15,9 @@ import java.util.List;
 public class Alphabetizer {
     public Alphabetizer(){}
     public ArrayList<String> Alphabetize(ArrayList<String> inputList) {
+        //Add checker - if two list are passed then call merge directly with the two list
+
+        //if 1 is passed called mergesort which will split it in half for merge
        return mergeSort(inputList);
     }
 
