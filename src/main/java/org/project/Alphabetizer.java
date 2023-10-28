@@ -10,14 +10,20 @@
 package org.project;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Alphabetizer {
     public Alphabetizer(){}
-    public ArrayList<String> Alphabetize(ArrayList<String> inputList) {
-       return mergeSort(inputList);
+    public ArrayList<String> Alphabetize(ArrayList<String> inputList, ArrayList<String> totalList) {
+        // If you are alphabetizing a list
+        if(totalList == null){
+            return mergeSort(inputList);
+        }
+
+        //If you are merging two list that are already alphabetized
+        return merge(inputList, totalList);
     }
 
+    //If you are alphabetizing one list then call this function so that it may be split in two
     public static ArrayList<String> mergeSort(ArrayList<String> inputList) {
         if (inputList.size() <= 1) {
             return inputList;
@@ -33,6 +39,7 @@ public class Alphabetizer {
         return merge(left, right);
     }
 
+    //Merge two arraylist and alphabetize them
     private static ArrayList<String> merge(ArrayList<String> left, ArrayList<String> right) {
         ArrayList<String> result = new ArrayList<>();
         int leftIndex = 0;
@@ -42,7 +49,7 @@ public class Alphabetizer {
             String leftElement = left.get(leftIndex);
             String rightElement = right.get(rightIndex);
 
-            if (leftElement.compareToIgnoreCase(rightElement) < 0) {
+            if (leftElement.compareTo(rightElement) < 0) {
                 result.add(leftElement);
                 leftIndex++;
             } else {
