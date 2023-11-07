@@ -73,10 +73,18 @@ public class Input {
     }
     public boolean removeInputItem(String key) { 
         if(dataMap.containsKey(key)){
-            totalList.remove(dataMap.get(key).originalDescriptor);
+            removeInputFromTotal(dataMap.get(key));
             dataMap.remove(key); 
             return true;
         }
         return false;
+    }
+
+    private void removeInputFromTotal(descriptionObject original){
+        for(String entry: original.circularShifted){
+            if(totalList.contains(entry)){
+                totalList.remove(entry);
+            }
+        }
     }
 }
