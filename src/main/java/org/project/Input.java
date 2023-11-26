@@ -58,6 +58,7 @@ public class Input {
             }
 
             reader.close();
+            System.out.println(totalList);
             writeTotalList();
         } catch (IOException e) {
             e.printStackTrace();

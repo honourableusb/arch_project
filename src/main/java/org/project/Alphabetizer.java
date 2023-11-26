@@ -65,8 +65,8 @@ public class Alphabetizer {
             }
         }
 
-//        result.addAll(left.subList(leftIndex, left.size()));
-//        result.addAll(right.subList(rightIndex, right.size()));
+        result.addAll(left.subList(leftIndex, left.size()));
+        result.addAll(right.subList(rightIndex, right.size()));
 
         return result;
     }
