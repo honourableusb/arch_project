@@ -1,50 +1,49 @@
-https://a1.edu	The Shawshank Redemption
-https://b2.com	The Godfather
-https://c3.org	Pulp Fiction
-https://d4.net	The Dark Knight
-https://e5.edu	Schindler's List
-https://f6.com	Forrest Gump
-https://g7.org	The Matrix
-https://h8.net	Titanic
-https://i9.edu	Inception
-https://j0.com	Fight Club
-https://k1.org	Gladiator
-https://l2.net	The Silence of the Lambs
-https://m3.edu	The Lord of the Rings: The Fellowship of the Ring
-https://n4.com	Star Wars: Episode IV - A New Hope
-https://o5.org	Jurassic Park
-https://p6.net	The Avengers
-https://q7.edu	Avatar
-https://r8.com	E.T. the Extra-Terrestrial
-https://s9.org	The Lion King
-https://t0.net	The Terminator
-https://u1.edu	Jaws
-https://v2.com	The Wizard of Oz
-https://w3.org	Gone with the Wind
-https://x4.net	Casablanca
-https://y5.edu	The Matrix
-https://z6.com	Braveheart
-https://a7.org	Saving Private Ryan
-https://b8.net	The Social Network
-https://c9.edu	Black Swan
-https://d0.com	The Revenant
-https://e1.org	The Great Gatsby
-https://f2.net	Gladiator
-https://g3.edu	The Departed
-https://h4.com	The Godfather Part II
-https://i5.org	The Green Mile
-https://j6.net	The Sixth Sense
-https://k7.edu	A Beautiful Mind
-https://l8.com	The Shape of Water
-https://m9.org	American Beauty
-https://n0.net	La La Land
-https://o1.edu	The Sound of Music
-https://p2.com	12 Angry Men
-https://q3.org	The Breakfast Club
-https://r4.net	Inglourious Basterds
-https://s5.edu	2001: A Space Odyssey
-https://t6.com	Fargo
-https://u7.org	The Graduate
-https://v8.net	The Grand Budapest Hotel
-https://w9.edu	Reservoir Dogs
-https://x0.com	The Good, the Bad and the Ugly
+https://en.wikipedia.org/wiki/The_Shawshank_Redemption	The Shawshank Redemption
+https://en.wikipedia.org/wiki/The_Godfather	The Godfather
+https://en.wikipedia.org/wiki/Pulp_Fiction	Pulp Fiction
+https://en.wikipedia.org/wiki/The_Dark_Knight	The Dark Knight
+https://en.wikipedia.org/wiki/Schindler%27s_List	Schindler's List
+https://en.wikipedia.org/wiki/Forrest_Gump	Forrest Gump
+https://en.wikipedia.org/wiki/The_Matrix	The Matrix
+https://en.wikipedia.org/wiki/Titanic_(1997_film)	Titanic
+https://en.wikipedia.org/wiki/Inception	Inception
+https://en.wikipedia.org/wiki/Fight_Club	Fight Club
+https://en.wikipedia.org/wiki/Gladiator_(2000_film)	Gladiator
+https://en.wikipedia.org/wiki/The_Silence_of_the_Lambs_(film)	The Silence of the Lambs
+https://en.wikipedia.org/wiki/The_Lord_of_the_Rings:_The_Fellowship_of_the_Ring	The Lord of the Rings: The Fellowship of the Ring
+https://en.wikipedia.org/wiki/Star_Wars_(film)	Star Wars: Episode IV - A New Hope
+https://en.wikipedia.org/wiki/Jurassic_Park	Jurassic Park
+https://en.wikipedia.org/wiki/The_Avengers_(2012_film)	The Avengers
+https://en.wikipedia.org/wiki/Avatar_(2009_film)	Avatar
+https://en.wikipedia.org/wiki/E.T._the_Extra-Terrestrial	E.T. the Extra-Terrestrial
+https://en.wikipedia.org/wiki/The_Lion_King	The Lion King
+https://en.wikipedia.org/wiki/The_Terminator	The Terminator
+https://en.wikipedia.org/wiki/Jaws_(film)	Jaws
+https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)	The Wizard of Oz
+https://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)	Gone with the Wind
+https://en.wikipedia.org/wiki/Casablanca_(film)	Casablanca
+https://en.wikipedia.org/wiki/The_Matrix	The Matrix
+https://en.wikipedia.org/wiki/Braveheart	Braveheart
+https://en.wikipedia.org/wiki/Saving_Private_Ryan	Saving Private Ryan
+https://en.wikipedia.org/wiki/The_Social_Network	The Social Network
+https://en.wikipedia.org/wiki/Black_Swan_(film)	Black Swan
+https://en.wikipedia.org/wiki/The_Revenant_(2015_film)	The Revenant
+https://en.wikipedia.org/wiki/The_Great_Gatsby_(2013_film)	The Great Gatsby
+https://en.wikipedia.org/wiki/The_Departed	The Departed
+https://en.wikipedia.org/wiki/The_Godfather_Part_II	The Godfather Part II
+https://en.wikipedia.org/wiki/The_Green_Mile_(film)	The Green Mile
+https://en.wikipedia.org/wiki/The_Sixth_Sense	The Sixth Sense
+https://en.wikipedia.org/wiki/A_Beautiful_Mind_(film)	A Beautiful Mind
+https://en.wikipedia.org/wiki/The_Shape_of_Water	The Shape of Water
+https://en.wikipedia.org/wiki/American_Beauty_(1999_film)	American Beauty
+https://en.wikipedia.org/wiki/La_La_Land	La La Land
+https://en.wikipedia.org/wiki/The_Sound_of_Music_(film)	The Sound of Music
+https://en.wikipedia.org/wiki/12_Angry_Men_(1957_film)	12 Angry Men
+https://en.wikipedia.org/wiki/The_Breakfast_Club	The Breakfast Club
+https://en.wikipedia.org/wiki/Inglourious_Basterds	Inglourious Basterds
+https://en.wikipedia.org/wiki/2001:_A_Space_Odyssey	2001: A Space Odyssey
+https://en.wikipedia.org/wiki/Fargo_(1996_film)	Fargo
+https://en.wikipedia.org/wiki/The_Graduate	The Graduate
+https://en.wikipedia.org/wiki/The_Grand_Budapest_Hotel	The Grand Budapest Hotel
+https://en.wikipedia.org/wiki/Reservoir_Dogs	Reservoir Dogs
+https://en.wikipedia.org/wiki/The_Good,_the_Bad_and_the_Ugly	The Good, the Bad and the Ugly

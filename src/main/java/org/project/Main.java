@@ -37,7 +37,7 @@ public class Main {
         String hardcodedFile = "src\\main\\resources\\input.txt";
         Input urlInput = new Input(hardcodedFile);
         HashMap<String, descriptionObject> inputItems = urlInput.processInputFile();
-
+        System.out.println(inputItems);
         // Create a JFrame (window)
         JFrame frame = new JFrame("The KWIC System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -182,35 +182,35 @@ public class Main {
         frame.getRootPane().setDefaultButton(submitButton);
 
         // Define an ActionListener for the submit button
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Clear our the total Alphabetical panel
-                alphabetizerTotalPanel.setText("");
-                // Get the text from the text field
-                String inputText = inputField.getText();
-                // Handle Ciruclar Shift
-                ArrayList<String> csResults = new ArrayList<>();
-                csResults = circularShift.shift(inputText);
-                // Alphaetize single title
-                ArrayList<String> alphaResults = new ArrayList<>();
-                alphaResults = alphabetizer.Alphabetize(csResults, null);
-                // Alphabetize all titles
-                totalList = alphabetizer.Alphabetize(alphaResults, totalList);
-
-                // Append the submitted text to the textPane with alternating colors
-                appendToInputPanel(inputPanel, inputText, currentColor);
-                appendToCSPanel(circularShiftPanel, csResults, currentColor);
-                appendToAlphaPanel(alphabetizerPanel, alphaResults, currentColor);
-                appendToAlphaTotalPanel(alphabetizerTotalPanel, totalList, color1, color2);
-
-                // Toggle between the two colors
-                currentColor = (currentColor == color1) ? color2 : color1;
-
-                // Clear the text field for the next input
-                inputField.setText("");
-            }
-        });
+//        submitButton.addActionListener(new ActionListener() {
+//            @Override
+////            public void actionPerformed(ActionEvent e) {
+////                // Clear our the total Alphabetical panel
+////                alphabetizerTotalPanel.setText("");
+////                // Get the text from the text field
+////                String inputText = inputField.getText();
+////                // Handle Ciruclar Shift
+////                ArrayList<String> csResults = new ArrayList<>();
+////                csResults = circularShift.shift(inputText);
+////                // Alphaetize single title
+////                ArrayList<String> alphaResults = new ArrayList<>();
+////                alphaResults = alphabetizer.Alphabetize(csResults, null);
+////                // Alphabetize all titles
+////                totalList = alphabetizer.Alphabetize(alphaResults, totalList);
+////
+////                // Append the submitted text to the textPane with alternating colors
+////                appendToInputPanel(inputPanel, inputText, currentColor);
+////                appendToCSPanel(circularShiftPanel, csResults, currentColor);
+////                appendToAlphaPanel(alphabetizerPanel, alphaResults, currentColor);
+////                appendToAlphaTotalPanel(alphabetizerTotalPanel, totalList, color1, color2);
+////
+////                // Toggle between the two colors
+////                currentColor = (currentColor == color1) ? color2 : color1;
+////
+////                // Clear the text field for the next input
+////                inputField.setText("");
+////            }
+//        });
 
         // Add the panel to the frame
         frame.add(panel);

@@ -9,11 +9,11 @@
 //Alphabetizer.java -- this sorts our circular shifts for output.
 package org.project;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Alphabetizer {
     public Alphabetizer(){}
-    public ArrayList<String> Alphabetize(ArrayList<String> inputList, ArrayList<String> totalList) {
+    public List<Map.Entry<String, String>> Alphabetize(List<Map.Entry<String, String>> inputList, List<Map.Entry<String, String>> totalList) {
         // If you are alphabetizing a list
         if(totalList == null){
             return mergeSort(inputList);
@@ -24,32 +24,39 @@ public class Alphabetizer {
     }
 
     //If you are alphabetizing one list then call this function so that it may be split in two
-    public static ArrayList<String> mergeSort(ArrayList<String> inputList) {
+    public static List<Map.Entry<String, String>> mergeSort(List<Map.Entry<String, String>> inputList) {
         if (inputList.size() <= 1) {
             return inputList;
         }
+        List<Map.Entry<String,String>> firstList = new ArrayList<>();
+        List<Map.Entry<String,String>> secondList = new ArrayList<>();
 
-        int middle = inputList.size() / 2;
-        ArrayList<String> left = new ArrayList<>(inputList.subList(0, middle));
-        ArrayList<String> right = new ArrayList<>(inputList.subList(middle, inputList.size()));
+        int i = 0;
+        for(Map.Entry<String, String> e : inputList){
+            (i++ % 2 == 0 ? firstList:secondList).add(e);
+        }
 
-        left = mergeSort(left);
-        right = mergeSort(right);
+//        int middle = inputList.size() / 2;
+//        ArrayList<String> left = new ArrayList<>(inputList.subList(0, middle));
+//        ArrayList<String> right = new ArrayList<>(inputList.subList(middle, inputList.size()));
 
-        return merge(left, right);
+        firstList = mergeSort(firstList);
+        secondList = mergeSort(secondList);
+
+        return merge(firstList, secondList);
     }
 
     //Merge two arraylist and alphabetize them
-    private static ArrayList<String> merge(ArrayList<String> left, ArrayList<String> right) {
-        ArrayList<String> result = new ArrayList<>();
+    private static List<Map.Entry<String, String>> merge(List<Map.Entry<String, String>> left, List<Map.Entry<String, String>> right) {
+        List<Map.Entry<String, String>> result = new ArrayList<>();
         int leftIndex = 0;
         int rightIndex = 0;
 
         while (leftIndex < left.size() && rightIndex < right.size()) {
-            String leftElement = left.get(leftIndex);
-            String rightElement = right.get(rightIndex);
+            Map.Entry<String, String> leftElement = left.get(leftIndex);
+            Map.Entry<String, String> rightElement = right.get(rightIndex);
 
-            if (leftElement.compareTo(rightElement) < 0) {
+            if (leftElement.getKey().compareTo(rightElement.getKey()) < 0) {
                 result.add(leftElement);
                 leftIndex++;
             } else {
@@ -58,8 +65,8 @@ public class Alphabetizer {
             }
         }
 
-        result.addAll(left.subList(leftIndex, left.size()));
-        result.addAll(right.subList(rightIndex, right.size()));
+//        result.addAll(left.subList(leftIndex, left.size()));
+//        result.addAll(right.subList(rightIndex, right.size()));
 
         return result;
     }

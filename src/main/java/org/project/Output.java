@@ -2,6 +2,8 @@ package org.project;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Output {
     public ArrayList<String> Search(String userInput, String searchMode, HashMap<String, descriptionObject> inputItems, ArrayList<String> totalList) {
@@ -104,13 +106,13 @@ public class Output {
         ArrayList<String> matchingURLs = new ArrayList<>();
 
         for (descriptionObject descriptionObject : inputItems.values()) {
-            ArrayList<String> alphabetized = descriptionObject.getAlphabetized();
+            List<Map.Entry<String, String>> alphabetized = descriptionObject.getAlphabetized();
 
             if (alphabetized != null) {
-                for (String attributeValue : alphabetized) {
-                    if (matches.contains(attributeValue)) {
+                for (Map.Entry<String, String> attributeValue : alphabetized) {
+                    if (matches.contains(attributeValue.getKey())) {
                         // If the attribute value is found in 'matches', add the URL to the result
-                        matchingURLs.add(descriptionObject.getURL());
+                        matchingURLs.add(attributeValue.getValue());
                         break; // No need to check other attributes of the same DescriptionObject
                     }
                 }

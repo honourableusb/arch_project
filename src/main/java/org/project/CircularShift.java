@@ -10,13 +10,13 @@
 // example: I like programming -> like programming I -> programming I like
 package org.project;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class CircularShift {
     public CircularShift(){}
-    public ArrayList<String> shift(String input) {
+    public List<Map.Entry<String, String>> shift(String input, String originalDescription) {
         String[] words = input.split(" ");
-        ArrayList<String> permutations = new ArrayList<>();
+        List<Map.Entry<String, String>> permutations = new ArrayList<>();
         
         // Iterate through each word in the input string
         for (int i = 0; i < words.length; i++) {
@@ -29,7 +29,7 @@ public class CircularShift {
             
             // Combine the rotated words into a single string
             String rotatedString = String.join(" ", rotatedWords);
-            permutations.add(rotatedString);
+            permutations.add(new AbstractMap.SimpleEntry<>(rotatedString, originalDescription));
         }
         
         return permutations;

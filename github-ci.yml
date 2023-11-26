@@ -1,0 +1,35 @@
+name: buildscript
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  generateDeploymentInformation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        run: |
+          mkdir artifacts &&
+          ./gradlew build &&
+          ./gradlew war &&
+          mv build/libs/* artifacts
+      - name : uploadArtifacts
+        uses: actions/upload-artifacts@v3
+        with:
+          name: jarAndWar
+          path: artifacts
+
+      - name: buildWar
+
+      - name: buildDocker
+

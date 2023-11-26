@@ -1,17 +1,29 @@
 package org.project;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Input {
     String filepath; 
     HashMap<String, descriptionObject> dataMap;
-    ArrayList<String> totalList;
+    List<Map.Entry<String, String>> totalList;
+    AutoFiller auto = new AutoFiller();
 
     Input(String filepath) {
         this.filepath = filepath;
         this.dataMap = new HashMap<String, descriptionObject>();
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public void setAutoFiller(AutoFiller auto) {
+        this.auto = auto;
+    }
+
+    public AutoFiller getAutofiller() {
+        return auto;
     }
 
     public HashMap<String, descriptionObject> processInputFile() {        
@@ -21,8 +33,8 @@ public class Input {
             NoiseRemover noiseRemover = new NoiseRemover();
             CircularShift circularShifter = new CircularShift();
             Alphabetizer alphabetizer = new Alphabetizer();
-            ArrayList<String> circularShifted = new ArrayList<>();
-            ArrayList<String> alphabetized = new ArrayList<>();
+            List<Map.Entry<String,String>> circularShifted;
+            List<Map.Entry<String,String>> alphabetized;
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\t"); // Assuming tab-separated values
@@ -32,12 +44,12 @@ public class Input {
                     String originalDescription = parts[1];
                     
                     String quietWord = noiseRemover.removeNoiseWordsAndSymbols(originalDescription);
-                    circularShifted = circularShifter.shift(quietWord);
+                    circularShifted = circularShifter.shift(quietWord, originalDescription);
                     alphabetized = alphabetizer.Alphabetize(circularShifted, null);
                     
-                    descriptionObject descObject = new descriptionObject(key, originalDescription, quietWord, circularShifted, alphabetized);
-                    dataMap.put(key, descObject);
-
+                    descriptionObject descObject = new descriptionObject(key, originalDescription, quietWord, circularShifted, alphabetized, 0);
+                    dataMap.put(originalDescription, descObject);
+                    auto.addUniqueWordsFromString(originalDescription);
                     //Merge the new alphabetized title with the total list of alphabetized titles
                     totalList = alphabetizer.Alphabetize(alphabetized, totalList);
                 } else {
@@ -45,27 +57,34 @@ public class Input {
                 }
             }
 
-            reader.close(); 
+            reader.close();
+            writeTotalList();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return dataMap; 
     }
 
-    public ArrayList<String> getTotalList() { return totalList; }
+    private void writeTotalList() throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("totalList.txt"));
+        bw.write(totalList.toString());
+        bw.close();
+    }
+
+    public List<Map.Entry<String, String>> getTotalList() { return totalList; }
     public HashMap<String, descriptionObject> getInputItems() { return dataMap; }
     public void addInputItem(String url, String newTitle) {
         NoiseRemover noiseRemover = new NoiseRemover();
         CircularShift circularShifter = new CircularShift();
         Alphabetizer alphabetizer = new Alphabetizer();
-        ArrayList<String> circularShifted = new ArrayList<>();
-        ArrayList<String> alphabetized = new ArrayList<>();
+        List<Map.Entry<String, String>> circularShifted = new ArrayList<>();
+        List<Map.Entry<String, String>> alphabetized = new ArrayList<>();
 
         String quietWord = noiseRemover.removeNoiseWordsAndSymbols(newTitle);
-        circularShifted = circularShifter.shift(quietWord);
+        circularShifted = circularShifter.shift(quietWord, newTitle);
         alphabetized = alphabetizer.Alphabetize(circularShifted, null);
 
-        descriptionObject descObject = new descriptionObject(url, newTitle, quietWord, circularShifted, alphabetized);
+        descriptionObject descObject = new descriptionObject(url, newTitle, quietWord, circularShifted, alphabetized, 0);
         dataMap.put(url, descObject); 
 
         //Merge the new alphabetized title with the total list of alphabetized titles
@@ -81,10 +100,8 @@ public class Input {
     }
 
     private void removeInputFromTotal(descriptionObject original){
-        for(String entry: original.circularShifted){
-            if(totalList.contains(entry)){
-                totalList.remove(entry);
-            }
+        for(Map.Entry<String, String> entry: original.circularShifted){
+            totalList.remove(entry.getKey());
         }
     }
 }
